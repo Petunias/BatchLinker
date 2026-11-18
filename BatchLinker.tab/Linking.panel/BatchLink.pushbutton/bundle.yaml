@@ -1,0 +1,5 @@
+title: Batch Link
+tooltip: Batch link multiple Revit models with memory management, workset assignment, automatic popup suppression, and audit logging.
+author: Antigravity & BWT
+help_url: https://github.com/eirannejad/pyRevit
+context: zero-doc

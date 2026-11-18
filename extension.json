@@ -1,0 +1,8 @@
+{
+    "type": "extension",
+    "name": "BatchLinker",
+    "description": "Batch Model Linker with RAM & Dialog Management for Revit",
+    "author": "Antigravity & BWT",
+    "default_enabled": true,
+    "rocket_mode_compatible": true
+}

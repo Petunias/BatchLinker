@@ -1,0 +1,96 @@
+================================================================================
+BATCH LINKER FOR REVIT - USER & INSTALLATION GUIDE
+================================================================================
+
+This tool automates linking multiple Revit models into each other using an 
+Excel matrix. It handles opening, linking, workset creation/assignment, 
+RAM management, pop-up suppression, and syncing with central automatically.
+
+--------------------------------------------------------------------------------
+1. REQUIREMENTS
+--------------------------------------------------------------------------------
+- Autodesk Revit (2020 through 2026+)
+- pyRevit installed (Free open-source add-in from pyrevitlabs.io)
+- NO other plugins, add-ins, or administrator rights required!
+
+--------------------------------------------------------------------------------
+2. INSTALLATION (Takes 10 seconds)
+--------------------------------------------------------------------------------
+1. Press [Windows Key + R] on your keyboard.
+2. Paste this path into the Run box and hit Enter:
+   %APPDATA%\pyRevit\Extensions
+
+   (Note: If the "Extensions" folder doesn't exist yet, simply create a new 
+    folder named "Extensions").
+
+3. Copy the entire "BatchLinker.extension" folder into that directory.
+
+4. Open Revit (or if Revit is already open, go to the pyRevit tab -> click "Reload").
+
+A new tab named "BatchLinker" with the "Batch Link" button will now appear on 
+your Revit ribbon!
+
+--------------------------------------------------------------------------------
+3. HOW TO USE THE TOOL
+--------------------------------------------------------------------------------
+1. Open Revit to the blank Start / Recent Files screen.
+   **You do NOT need to open any project beforehand!**
+
+2. Click the "BatchLinker" tab on the ribbon -> Click "Batch Link".
+
+3. When prompted, select your Excel file (e.g. "Batch_Link_Matrix_Template.xlsx").
+
+4. A checklist window will appear showing your models and how many links each 
+   will receive. Check the models you want to process (you can run all of them 
+   or select a batch of 10-15 at a time) and click "Run Batch Linking".
+
+5. Sit back and let Revit work. The tool runs completely unattended. 
+   When finished, an alert will confirm completion and show the path to the 
+   audit log.
+
+--------------------------------------------------------------------------------
+4. HOW TO SET UP THE EXCEL FILE
+--------------------------------------------------------------------------------
+The Excel file must contain two tabs: "Links" and "Matrix".
+(Use the included "Batch_Link_Matrix_Template.xlsx" as a reference).
+
+--- TAB 1: "Links" ---
+Defines each model and its properties (5 columns):
+  - Column A: Model Name   -> Unique identifier/name (e.g. Arch_Core)
+  - Column B: File Path    -> Full path to the .rvt file (e.g. C:\Projects\Arch.rvt)
+  - Column C: Positioning  -> Link placement method:
+                              * "Origin" (Internal Origin to Internal Origin - Default)
+                              * "Shared" (By Shared Coordinates)
+                              * "Center" (Center to Center)
+  - Column D: Link Type    -> Attachment Type:
+                              * "Overlay" (Default & Recommended - prevents circular nesting)
+                              * "Attachment" (Links travel together into other models)
+  - Column E: Workset      -> Name of the workset (e.g. Link_Arch_Core).
+                              If left blank, defaults to "Link_[Model Name]".
+                              If the workset does not exist, the script creates it!
+
+--- TAB 2: "Matrix" ---
+Controls which models get linked into which:
+  - Row 1 (Header): Column A is "Model Name", followed by the Model Names to link.
+  - Rows 2+: Each row represents a Host Model.
+  - Cells:
+      * Type "YES", "Y", "X", or "1" to link that column's model into that row's host.
+      * Leave BLANK or "0" to NOT link.
+      * "--" marks self-linking (automatically skipped).
+
+--------------------------------------------------------------------------------
+5. AUTOMATED SAFETY & RAM MANAGEMENT BUILT-IN
+--------------------------------------------------------------------------------
+- RAM Protection: Host models open with "CloseAllWorksets" (minimal memory), and 
+  link geometry is immediately unloaded after placement (Unload) so Revit's 
+  memory never overloads across dozens of models.
+- Silent Execution: Coordinate mismatch pop-ups, unresolved CAD links, and 
+  standard Revit warnings are automatically intercepted and dismissed with "OK".
+- Worksharing: For central files, the tool synchronizes and relinquishes all 
+  worksets automatically so nothing remains checked out.
+- Audit Log: Every action, warning, and suppressed pop-up is logged with 
+  timestamps to an "Audit_Logs" folder located right next to your Excel file.
+
+================================================================================
+For questions or updates, contact your BIM / Automation team.
+================================================================================
